@@ -39,28 +39,58 @@ public class SeatMap
             System.out.println("All seats are occupied.");
             return;
         }
-        Scanner scan = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         String name;
         int numSeats;
         int row, column;
         System.out.print("Name: ");
-        name = scan.nextLine();
+        name = sc.nextLine();
+        
+        
         System.out.print("How many seats: ");
-        numSeats = scan.nextInt();
+        try{
+        	numSeats = sc.nextInt();
+        }
+        catch(Exception e)
+        {
+        	System.out.println("Invaild number.");
+        	return;
+        }
+        if(numSeats>numColumn||numSeats<0)
+        {
+        	System.out.println("Input must be equal or less than the number of columns.");
+        	return;
+        }
+        
+        
         System.out.print("Seat row symbol: ");
-        row = scan.next().toLowerCase().charAt(0) -'a';
+        row = sc.next().toLowerCase().charAt(0) -'a';
+        if(row>=numRow||row<0)
+        {
+        	System.out.println("Invaild character.");
+        	return;
+        }
+        
+        
         System.out.print("Seat col number: ");
-        column = scan.nextInt()-1;
+        try{
+        	column = sc.nextInt()-1;
+        }
+        catch(Exception e)
+        {
+        	System.out.println("Invaild number.");
+        	return;
+        }
         if(numSeats>numColumn-column)
         {
-            System.out.println("Cannot reserve seats continuously.");
+            System.out.println("Invaild column number.");
             return;
         }
         for(int i=0;i<numSeats;i++)
         {
             if(seats[row][column+i].isOccupied())
             {
-                System.out.println("Already occupied seat(s).");
+                System.out.println("There is(are) already occupied seat(s).");
                 return;
             }
         }
@@ -83,6 +113,10 @@ public class SeatMap
                     System.out.println((count++)+": "+(char)(i+'A')+""+(j+1)+", "+seats[i][j].getName());
                 }
             }
+        }
+        if(count==1)
+        {
+        	System.out.println("There is no occupied seat.");
         }
     }
 
